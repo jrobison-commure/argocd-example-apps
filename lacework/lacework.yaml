@@ -1,0 +1,18 @@
+name: Check and Install Lacework Agent
+
+on: [push]
+
+jobs:
+  check-install-lacework-agent:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Check if Lacework Agent is installed
+      run: |
+        if ! command -v lacework; then
+          echo "Lacework Agent is not installed"
+          curl https://raw.githubusercontent.com/lacework/go-agent/master/install.sh | bash
+        else
+          echo "Lacework Agent is already installed"
+        fi
