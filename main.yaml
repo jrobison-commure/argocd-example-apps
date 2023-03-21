@@ -1,0 +1,17 @@
+name: GCP Pull Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pull-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Pull image from container repo
+        run: |
+          gcloud auth configure-docker
+          docker pull gcr.io/[PROJECT_ID]/[IMAGE_NAME]:[TAG]
